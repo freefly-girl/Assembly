@@ -8,6 +8,7 @@ import com.educational.assemblyapp.R
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.educational.assemblyapp.databinding.FiltersScreenBinding
 import com.educational.assemblyapp.domain.entity.FrameRateTypeEnum.*
+import com.educational.assemblyapp.domain.entity.Video
 import com.educational.assemblyapp.domain.entity.VideoQualityTypeEnum.*
 import com.educational.assemblyapp.presentation.common.BaseFragment
 import com.educational.assemblyapp.presentation.common.navigate
@@ -15,13 +16,17 @@ import com.educational.assemblyapp.presentation.resultScreen.ResultFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FiltersFragment : BaseFragment(R.layout.filters_screen) {
+class FiltersFragment(
+    sendedVideoProject: Video
+) : BaseFragment(R.layout.filters_screen) {
 
     private val viewBinding by viewBinding(FiltersScreenBinding::bind)
     private val viewModel by viewModels<FiltersViewModel>()
 
     private var typeVideoQuality: String = ALL.name
     private var frameRates: String = FPS_25.name
+
+    private val videoProject: Video = sendedVideoProject
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,7 +77,7 @@ class FiltersFragment : BaseFragment(R.layout.filters_screen) {
                     viewBinding.filtersProgress.isVisible = true
                 }
                 is FiltersState.Success -> {
-                    parentFragmentManager.navigate(ResultFragment())
+                    parentFragmentManager.navigate(ResultFragment(videoProject))
                 }
             }
         }
@@ -82,7 +87,7 @@ class FiltersFragment : BaseFragment(R.layout.filters_screen) {
     }
 
     fun nextScreen() {
-        parentFragmentManager.navigate(ResultFragment())
+        parentFragmentManager.navigate(ResultFragment(videoProject))
     }
 
 

@@ -8,6 +8,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.educational.assemblyapp.R
 import com.educational.assemblyapp.databinding.InputScreenBinding
 import com.educational.assemblyapp.presentation.common.BaseFragment
+import com.educational.assemblyapp.presentation.common.navigate
+import com.educational.assemblyapp.presentation.filtersScreen.FiltersFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +50,7 @@ class InputFragment: BaseFragment(R.layout.input_screen) {
                     viewBinding.inputLoadingBar.isVisible = true
                 }
                 is InputScreenState.Success -> {
-                    parentFragmentManager.popBackStack()
+                    parentFragmentManager.navigate(FiltersFragment(state.videoProject))
                 }
             }
         }

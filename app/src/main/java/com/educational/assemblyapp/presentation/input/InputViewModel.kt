@@ -25,11 +25,7 @@ class InputViewModel @Inject constructor(
         viewModelScope.launchWithErrorHandler(block = {
             _screenState.value = InputScreenState.Loading()
             var video = repository.addVideo(title = title, text = text)
-            video.previewUrl = "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/slow-motion-falling-money_-jjatxweb__S0000.jpg"
-            video.stockItemId = "11851"
-            video = repository.updateVideoByTitle(video = video)
-            val jobId = repository.assembleVideo(video.title)
-            Log.d("assembly", "started assembling $jobId")
+
             _screenState.value = InputScreenState.Success(video)
         }, onError = {
             _screenState.value = InputScreenState.Error(it)
@@ -40,6 +36,6 @@ class InputViewModel @Inject constructor(
 sealed class InputScreenState {
     class Initial() : InputScreenState()
     class Loading() : InputScreenState()
-    class Success(val video: Video) : InputScreenState()
+    class Success(val videoProject: Video) : InputScreenState()
     class Error(val throwable: Throwable) : InputScreenState()
 }

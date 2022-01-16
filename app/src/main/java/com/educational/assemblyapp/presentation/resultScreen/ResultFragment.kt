@@ -3,20 +3,28 @@ package com.educational.assemblyapp.presentation.resultScreen
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.educational.assemblyapp.R
 import com.educational.assemblyapp.databinding.ResultScreenBinding
+import com.educational.assemblyapp.domain.entity.Video
 import com.educational.assemblyapp.presentation.common.BaseFragment
+import com.educational.assemblyapp.presentation.common.navigate
+import com.educational.assemblyapp.presentation.mainMenu.MainMenuFragment
 import com.educational.assemblyapp.presentation.resultScreen.ResultState.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ResultFragment : BaseFragment(R.layout.result_screen) {
+class ResultFragment(
+    sendedVideoProject: Video
+) : BaseFragment(R.layout.result_screen) {
 
     private val viewBinding by viewBinding(ResultScreenBinding::bind)
     private val viewModel by viewModels<ResultViewModel>()
+
+    private val videoProject = sendedVideoProject
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,11 +48,14 @@ class ResultFragment : BaseFragment(R.layout.result_screen) {
                     viewBinding.resultProgress.isVisible = true
                     viewBinding.resultList.isVisible = false
                 }
-                is Success -> {
+                is SuccessStoryblocks -> {
                     viewBinding.resultError.isVisible = false
                     viewBinding.resultProgress.isVisible = false
                     viewBinding.resultList.isVisible = true
 //                    resultAdapter.submitList(state.video)   // todo: подключить адаптер
+                }
+                is Success -> {
+                    parentFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
                 }
             }
         }
@@ -54,7 +65,9 @@ class ResultFragment : BaseFragment(R.layout.result_screen) {
         }
 
         viewBinding.buttonResult.setOnClickListener {
-//            parentFragmentManager.navigate(MainMenuFragment)   // TODO: home_screen
+            //parentFragmentManager.navigate(MainMenuFragment())   // TODO: home_screen
+            viewModel.onFinishingButtonClicked(videoProject)
+
         }
 
         viewBinding.buttonResult.setBackgroundResource(R.drawable.rounded_corners)

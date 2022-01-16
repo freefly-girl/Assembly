@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VideoSearch(
     val title: String,
-    val thumbnailUrl: String
+    val thumbnailUrl: String,
+    val stockItemId: String
 ) : Parcelable

@@ -40,6 +40,10 @@ class FiltersViewModel @Inject constructor(
         })
     }
 
+    fun setInitialScreenState() {
+        _screenState.value = FiltersState.Initial()
+    }
+
 }
 
 sealed class FiltersState {

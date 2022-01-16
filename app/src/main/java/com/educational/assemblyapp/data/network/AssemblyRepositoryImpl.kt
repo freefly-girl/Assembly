@@ -126,7 +126,6 @@ class AssemblyRepositoryImpl @Inject constructor(
 
     private fun writeResponseBodyToDisk(body: ResponseBody?, fileName: String): Boolean {
         try {
-            // todo change the file location/name according to your needs
             val destinationFile = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 fileName

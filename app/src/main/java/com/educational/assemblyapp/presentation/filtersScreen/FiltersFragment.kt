@@ -55,11 +55,10 @@ class FiltersFragment(
 
         viewBinding.buttonFilters.setOnClickListener {
             viewModel.onClickedGoToResults(
-                keywords = viewBinding.textFieldKey.editText?.text.toString(),
+                keywords = viewBinding.textFieldKey.editText?.text.toString() + " " + videoProject.searchReq,
                 quality = viewBinding.spinner1.selectedItem.toString(),
                 fps = viewBinding.spinner2.selectedItem.toString()
             )
-//            nextScreen()
         }
 
         viewModel.screenState.observe(viewLifecycleOwner) { state: FiltersState ->
@@ -77,6 +76,7 @@ class FiltersFragment(
                     viewBinding.filtersProgress.isVisible = true
                 }
                 is FiltersState.Success -> {
+                    viewModel.setInitialScreenState()
                     parentFragmentManager.navigate(ResultFragment(videoProject, state.result))
                 }
             }

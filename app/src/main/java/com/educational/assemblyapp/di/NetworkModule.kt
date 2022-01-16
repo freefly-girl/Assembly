@@ -52,7 +52,6 @@ abstract class NetworkModule {
             SocketHandler.setSocket()
             SocketHandler.establishConnection()
             val mSocket = SocketHandler.getSocket()
-            //mSocket.emit("join_room")
             return mSocket
         }
 

@@ -33,45 +33,44 @@ class ResultFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // todo: подключить адаптер
         val resultAdapter = ResultScreenAdapter(viewModel::onButtonClicked)
         with(viewBinding.resultList) {
             adapter = resultAdapter
             layoutManager = LinearLayoutManager(context)
         }
 
+        viewBinding.searchQuery.text = videoProject.searchReq
+
         resultAdapter.submitList(resultVideo)
 
-//        viewModel.videoState.observe(viewLifecycleOwner) { state: ResultState ->
-//            when (state) {
-//                is Error -> {
-//                    viewBinding.resultError.isVisible = true
-//                    viewBinding.resultProgress.isVisible = false
-//                    viewBinding.resultList.isVisible = false
-//                }
-//                is Loading -> {
-//                    viewBinding.resultError.isVisible = false
-//                    viewBinding.resultProgress.isVisible = true
-//                    viewBinding.resultList.isVisible = false
-//                }
-//                is SuccessStoryblocks -> {
-//                    viewBinding.resultError.isVisible = false
-//                    viewBinding.resultProgress.isVisible = false
-//                    viewBinding.resultList.isVisible = true
-//                       // todo: подключить адаптер
-//                }
-//                is Success -> {
-//                    parentFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
-//                }
-//            }
-//        }
+        viewModel.videoState.observe(viewLifecycleOwner) { state: ResultState ->
+            when (state) {
+                is Error -> {
+                    viewBinding.resultError.isVisible = true
+                    viewBinding.resultProgress.isVisible = false
+                    viewBinding.resultList.isVisible = false
+                }
+                is Loading -> {
+                    viewBinding.resultError.isVisible = false
+                    viewBinding.resultProgress.isVisible = true
+                    viewBinding.resultList.isVisible = false
+                }
+                is AllIsOk -> {
+                    viewBinding.resultError.isVisible = false
+                    viewBinding.resultProgress.isVisible = false
+                    viewBinding.resultList.isVisible = true
+                }
+                is Success -> {
+                    parentFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
+                }
+            }
+        }
 
         viewBinding.filtersScreenBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
         viewBinding.buttonResult.setOnClickListener {
-            //parentFragmentManager.navigate(MainMenuFragment())   // TODO: home_screen
             viewModel.onFinishingButtonClicked(videoProject)
 
         }

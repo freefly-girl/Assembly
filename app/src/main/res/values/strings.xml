@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AssemblyAndroid</string>
+    <string name="input_title">Введите запрос</string>
+    <string name="input_label">Введите текст запроса</string>
+    <string name="input_button_text">Перейти к фильтрам</string>
+    <string name="loading_error_message">Ошибка загрузки проектов</string>
+    <string name="input_label2">Название проекта</string>
+</resources>

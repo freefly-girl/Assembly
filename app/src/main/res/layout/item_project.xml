@@ -28,18 +28,6 @@
         app:layout_constraintTop_toBottomOf="@+id/item_project_name"
         />
 
-    <!--        We can use ProgressBar style-->
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/item_project_progress"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            />-->
-
-    <!--    Or, use ordinary vector drawable-->
     <ImageView
         android:id="@+id/hourglass_progress"
         android:layout_width="40dp"

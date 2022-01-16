@@ -1,6 +1,5 @@
 package com.educational.assemblyapp.presentation.input
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.educational.assemblyapp.domain.AssemblyRepository
 import com.educational.assemblyapp.domain.entity.Video
 import com.educational.assemblyapp.presentation.common.launchWithErrorHandler
-import com.educational.assemblyapp.presentation.filtersScreen.FiltersState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -38,6 +38,7 @@ class ResultScreenAdapter(
             val item = getItem(position)
             itemResultPoster.setImageUrl(item.thumbnailUrl)
             itemResultTitle.text = item.title
+
 //            тут мы пытались менять цвет выбранного элемента, но у нас не получилось
 //            if (position == selected_item) {
 //                root.setBackgroundResource(R.color.grey)

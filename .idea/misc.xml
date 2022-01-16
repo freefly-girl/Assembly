@@ -6,9 +6,11 @@
         <entry key="app/src/main/res/layout/filters_screen.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/input_screen.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/item_project.xml" value="0.16770833333333332" />
-        <entry key="app/src/main/res/layout/item_result.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/item_result.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/main_menu_screen.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/result_screen.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/video_detail_screen.xml" value="0.4036458333333333" />
       </map>
     </option>
   </component>

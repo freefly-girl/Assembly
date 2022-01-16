@@ -13,18 +13,15 @@ class StoryblocksRepositoryImpl @Inject constructor(
 
     override suspend fun search(
         keywords: String?,
-        qualityType: VideoQualityTypeEnum,
-        fps: FrameRateTypeEnum
+        qualityType: String,
+        fps: String
     ): List<VideoSearch> {
         return storyblocksAPI.search(
-            apikey = "",
-            expires = "",
-            hmac = "",
             projectId = 1,
-            userId = 2,
+            userId = 1,
             keywords = null,
-            quality = qualityType.quality,
-            frameRates = fps.value
+            quality = qualityType,
+            frameRates = fps
         ).toVideo()
     }
 
@@ -32,8 +29,7 @@ class StoryblocksRepositoryImpl @Inject constructor(
         results?.mapNotNull { result ->
             VideoSearch(
                 title = result.title ?: return@mapNotNull null,
-                thumbnailUrl = result.thumbnailUrl ?: return@mapNotNull null,
-                previewUrls = (result.previewUrls ?: "").toString()
+                thumbnailUrl = result.thumbnailUrl ?: return@mapNotNull null
             )
         } ?: emptyList()
 }

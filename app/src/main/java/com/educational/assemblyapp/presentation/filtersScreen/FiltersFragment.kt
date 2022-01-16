@@ -54,12 +54,12 @@ class FiltersFragment(
         }
 
         viewBinding.buttonFilters.setOnClickListener {
-//            viewModel.onClickedGoToResults(
-//                keywords = viewBinding.textFieldKey.editText?.text.toString(),
-//                quality = viewBinding.spinner1.onItemSelectedListener.toString(),
-//                fps = viewBinding.spinner2.onItemSelectedListener.toString()
-//            )
-            nextScreen()
+            viewModel.onClickedGoToResults(
+                keywords = viewBinding.textFieldKey.editText?.text.toString(),
+                quality = viewBinding.spinner1.selectedItem.toString(),
+                fps = viewBinding.spinner2.selectedItem.toString()
+            )
+//            nextScreen()
         }
 
         viewModel.screenState.observe(viewLifecycleOwner) { state: FiltersState ->
@@ -77,7 +77,7 @@ class FiltersFragment(
                     viewBinding.filtersProgress.isVisible = true
                 }
                 is FiltersState.Success -> {
-                    parentFragmentManager.navigate(ResultFragment(videoProject))
+                    parentFragmentManager.navigate(ResultFragment(videoProject, state.result))
                 }
             }
         }
@@ -85,10 +85,5 @@ class FiltersFragment(
         viewBinding.buttonFilters.setBackgroundResource(R.drawable.rounded_corners)
 
     }
-
-    fun nextScreen() {
-        parentFragmentManager.navigate(ResultFragment(videoProject))
-    }
-
 
 }

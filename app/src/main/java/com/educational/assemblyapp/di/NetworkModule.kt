@@ -29,7 +29,7 @@ abstract class NetworkModule {
 
         @Provides
         fun provideAssemblyApi(): AssemblyApi = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8888")
+            .baseUrl("http://52.12.179.228:8888")
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(

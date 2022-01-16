@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.educational.assemblyapp.R
 import com.educational.assemblyapp.databinding.ResultScreenBinding
 import com.educational.assemblyapp.domain.entity.Video
+import com.educational.assemblyapp.domain.entity.VideoSearch
 import com.educational.assemblyapp.presentation.common.BaseFragment
 import com.educational.assemblyapp.presentation.common.navigate
 import com.educational.assemblyapp.presentation.mainMenu.MainMenuFragment
@@ -18,13 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResultFragment(
-    sendedVideoProject: Video
+    sendedVideoProject: Video,
+    result: List<VideoSearch>
 ) : BaseFragment(R.layout.result_screen) {
 
     private val viewBinding by viewBinding(ResultScreenBinding::bind)
     private val viewModel by viewModels<ResultViewModel>()
 
     private val videoProject = sendedVideoProject
+
+    private val resultVideo = result
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,29 +40,31 @@ class ResultFragment(
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.videoState.observe(viewLifecycleOwner) { state: ResultState ->
-            when (state) {
-                is Error -> {
-                    viewBinding.resultError.isVisible = true
-                    viewBinding.resultProgress.isVisible = false
-                    viewBinding.resultList.isVisible = false
-                }
-                is Loading -> {
-                    viewBinding.resultError.isVisible = false
-                    viewBinding.resultProgress.isVisible = true
-                    viewBinding.resultList.isVisible = false
-                }
-                is SuccessStoryblocks -> {
-                    viewBinding.resultError.isVisible = false
-                    viewBinding.resultProgress.isVisible = false
-                    viewBinding.resultList.isVisible = true
-//                    resultAdapter.submitList(state.video)   // todo: подключить адаптер
-                }
-                is Success -> {
-                    parentFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
-                }
-            }
-        }
+        resultAdapter.submitList(resultVideo)
+
+//        viewModel.videoState.observe(viewLifecycleOwner) { state: ResultState ->
+//            when (state) {
+//                is Error -> {
+//                    viewBinding.resultError.isVisible = true
+//                    viewBinding.resultProgress.isVisible = false
+//                    viewBinding.resultList.isVisible = false
+//                }
+//                is Loading -> {
+//                    viewBinding.resultError.isVisible = false
+//                    viewBinding.resultProgress.isVisible = true
+//                    viewBinding.resultList.isVisible = false
+//                }
+//                is SuccessStoryblocks -> {
+//                    viewBinding.resultError.isVisible = false
+//                    viewBinding.resultProgress.isVisible = false
+//                    viewBinding.resultList.isVisible = true
+//                       // todo: подключить адаптер
+//                }
+//                is Success -> {
+//                    parentFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
+//                }
+//            }
+//        }
 
         viewBinding.filtersScreenBack.setOnClickListener {
             parentFragmentManager.popBackStack()

@@ -27,16 +27,16 @@ class ResultViewModel @Inject constructor(
     val videoState: LiveData<ResultState> = _videoState
 
     init {
-        viewModelScope.launchWithErrorHandler(block = {
-            val video: List<VideoSearch> = storyblocksRepository.search(
-                null,
-                VideoQualityTypeEnum.ALL,
-                FrameRateTypeEnum.FPS_25
-            )
-            _videoState.value = SuccessStoryblocks(video)
-        }, onError = {
-            _videoState.value = Error(it)
-        })
+//        viewModelScope.launchWithErrorHandler(block = {
+//            val video: List<VideoSearch> = storyblocksRepository.search(
+//                keywords = ,
+//                VideoQualityTypeEnum.ALL,
+//                FrameRateTypeEnum.FPS_25
+//            )
+//            _videoState.value = SuccessStoryblocks(video)
+//        }, onError = {
+//            _videoState.value = Error(it)
+//        })
         repository = assemblyRepository
     }
 

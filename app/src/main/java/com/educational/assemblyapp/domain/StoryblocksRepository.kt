@@ -11,7 +11,7 @@ interface StoryblocksRepository {
      */
     suspend fun search(
         keywords: String?,
-        qualityType: VideoQualityTypeEnum,
-        fps: FrameRateTypeEnum
+        qualityType: String,
+        fps: String
     ) : List<VideoSearch>
 }

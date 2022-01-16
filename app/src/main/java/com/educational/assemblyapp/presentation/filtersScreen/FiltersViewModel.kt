@@ -31,8 +31,8 @@ class FiltersViewModel @Inject constructor(
             _screenState.value = FiltersState.Loading()
             var result = repository.search(
                 keywords = keywords,
-                qualityType = VideoQualityTypeEnum.ALL,
-                fps = FrameRateTypeEnum.FPS_25
+                qualityType = quality,
+                fps = fps
             )
             _screenState.value = FiltersState.Success(result)
         }, onError = {
@@ -45,6 +45,6 @@ class FiltersViewModel @Inject constructor(
 sealed class FiltersState {
     class Initial() : FiltersState()
     class Loading() : FiltersState()
-    class Success(val video: List<VideoSearch>) : FiltersState()
+    class Success(val result: List<VideoSearch>) : FiltersState()
     class Error(val throwable: Throwable) : FiltersState()
 }

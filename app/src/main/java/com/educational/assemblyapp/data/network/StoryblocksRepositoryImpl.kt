@@ -19,7 +19,7 @@ class StoryblocksRepositoryImpl @Inject constructor(
         return storyblocksAPI.search(
             projectId = 1,
             userId = 1,
-            keywords = null,
+            keywords = keywords,
             quality = qualityType,
             frameRates = fps
         ).toVideo()
@@ -29,7 +29,8 @@ class StoryblocksRepositoryImpl @Inject constructor(
         results?.mapNotNull { result ->
             VideoSearch(
                 title = result.title ?: return@mapNotNull null,
-                thumbnailUrl = result.thumbnailUrl ?: return@mapNotNull null
+                thumbnailUrl = result.thumbnailUrl ?: return@mapNotNull null,
+                stockItemId = result.id.toString()
             )
         } ?: emptyList()
 }

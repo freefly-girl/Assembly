@@ -50,7 +50,7 @@ class InputFragment: BaseFragment(R.layout.input_screen) {
                     viewBinding.inputLoadingBar.isVisible = true
                 }
                 is InputScreenState.Success -> {
-
+                    viewModel.setInitialScreenState()
                     parentFragmentManager.navigate(FiltersFragment(state.videoProject))
                 }
             }

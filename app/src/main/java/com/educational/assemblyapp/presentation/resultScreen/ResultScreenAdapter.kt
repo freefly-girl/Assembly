@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.educational.assemblyapp.R
 import com.educational.assemblyapp.presentation.resultScreen.ResultScreenAdapter.ViewHolder
 import com.educational.assemblyapp.databinding.ItemResultBinding
 import com.educational.assemblyapp.domain.entity.VideoSearch
@@ -21,6 +22,8 @@ class ResultScreenAdapter(
             oldItem == newItem
     }
 ) {
+    private var selected_item: Int? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ItemResultBinding.inflate(
@@ -35,7 +38,17 @@ class ResultScreenAdapter(
             val item = getItem(position)
             itemResultPoster.setImageUrl(item.thumbnailUrl)
             itemResultTitle.text = item.title
-            root.setOnClickListener { onButtonClicked(item) }
+//            тут мы пытались менять цвет выбранного элемента, но у нас не получилось
+//            if (position == selected_item) {
+//                root.setBackgroundResource(R.color.grey)
+//            } else {
+//                root.setBackgroundResource(0)
+//            }
+
+            root.setOnClickListener {
+                selected_item = holder.adapterPosition
+                onButtonClicked(item)
+            }
         }
     }
 

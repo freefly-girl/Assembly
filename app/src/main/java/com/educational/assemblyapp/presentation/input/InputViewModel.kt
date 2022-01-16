@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.educational.assemblyapp.domain.AssemblyRepository
 import com.educational.assemblyapp.domain.entity.Video
 import com.educational.assemblyapp.presentation.common.launchWithErrorHandler
+import com.educational.assemblyapp.presentation.filtersScreen.FiltersState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,6 +31,10 @@ class InputViewModel @Inject constructor(
         }, onError = {
             _screenState.value = InputScreenState.Error(it)
         })
+    }
+
+    fun setInitialScreenState() {
+        _screenState.value = InputScreenState.Initial()
     }
 }
 

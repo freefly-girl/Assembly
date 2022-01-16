@@ -23,34 +23,37 @@ class ResultViewModel @Inject constructor(
     ) : ViewModel() {
 
     private val repository: AssemblyRepository
-    private val _videoState = MutableLiveData<ResultState>(Loading())
+    private val _videoState = MutableLiveData<ResultState>(AllIsOk())
     val videoState: LiveData<ResultState> = _videoState
 
+    private var selectedItemId: String = ""
+    private var selectedThumbnailUrl: String = ""
+
     init {
-//        viewModelScope.launchWithErrorHandler(block = {
-//            val video: List<VideoSearch> = storyblocksRepository.search(
-//                keywords = ,
-//                VideoQualityTypeEnum.ALL,
-//                FrameRateTypeEnum.FPS_25
-//            )
-//            _videoState.value = SuccessStoryblocks(video)
-//        }, onError = {
-//            _videoState.value = Error(it)
-//        })
         repository = assemblyRepository
     }
 
     fun onButtonClicked(video: VideoSearch) {
         viewModelScope.launchWithErrorHandler(block = {
-            // TODO: new function from StoryblocksRepository
+            selectedThumbnailUrl = video.thumbnailUrl
+            selectedItemId = video.stockItemId
         })
     }
 
     fun onFinishingButtonClicked(video: Video) {
         var varVideo = video
         viewModelScope.launchWithErrorHandler(block = {
-            varVideo.previewUrl = "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/slow-motion-falling-money_-jjatxweb__S0000.jpg"
-            varVideo.stockItemId = "11851"
+            _videoState.value = Loading()
+            if (selectedItemId.isBlank())
+                varVideo.stockItemId = "11851"
+            else
+                varVideo.stockItemId = selectedItemId
+
+            if (selectedThumbnailUrl.isBlank())
+                varVideo.previewUrl = "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/slow-motion-falling-money_-jjatxweb__S0000.jpg"
+            else
+                varVideo.previewUrl = selectedThumbnailUrl
+
             varVideo = repository.updateVideoByTitle(video = varVideo)
             val jobId = repository.assembleVideo(varVideo.title)
             Log.d("assembly", "started assembling $jobId")
@@ -61,7 +64,7 @@ class ResultViewModel @Inject constructor(
 
 sealed class ResultState {
     class Loading() : ResultState()
-    class SuccessStoryblocks(val video: List<VideoSearch>) : ResultState()
     class Error(val throwable: Throwable) : ResultState()
     class Success(val video: Video) : ResultState()
+    class AllIsOk(): ResultState()
 }

@@ -2,7 +2,10 @@ package com.educational.assemblyapp.di
 
 import com.educational.assemblyapp.data.network.AssemblyApi
 import com.educational.assemblyapp.data.network.AssemblyRepositoryImpl
+import com.educational.assemblyapp.data.network.StoryblocksAPI
+import com.educational.assemblyapp.data.network.StoryblocksRepositoryImpl
 import com.educational.assemblyapp.domain.AssemblyRepository
+import com.educational.assemblyapp.domain.StoryblocksRepository
 import com.educational.assemblyapp.presentation.common.SocketHandler
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
@@ -52,8 +55,31 @@ abstract class NetworkModule {
             //mSocket.emit("join_room")
             return mSocket
         }
+
+        @Provides
+        fun provideStoryblocksAPI(): StoryblocksAPI = Retrofit.Builder()
+            .baseUrl("https://api.videoblocks.com")
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(
+                        HttpLoggingInterceptor()
+                            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+                    )
+                    .build()
+            )
+            .addConverterFactory(
+                Json(builderAction = {
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                }).asConverterFactory("application/json".toMediaType())
+            )
+            .build()
+            .create()
     }
 
     @Binds
     abstract fun getRepository(assemblyRepositoryImpl: AssemblyRepositoryImpl): AssemblyRepository
+
+    @Binds
+    abstract fun getStoryblocksRepository(storyblocksRepositoryImpl: StoryblocksRepositoryImpl): StoryblocksRepository
 }
